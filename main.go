@@ -12,6 +12,16 @@ import (
 	"strings"
 )
 
+type Iss struct {
+	Securities struct {
+		Columns []string        `json:"columns"`
+		Data    [][]interface{} `json:"data"`
+	} `json:"securities"`
+}
+
+const HOST = "https://moex.com"
+const http_json = "?iss.json=compact&iss.meta=off"
+
 // Results
 func main() {
 	fmt.Println(useful.ReadEntireFile("/etc/hosts"))
@@ -60,11 +70,11 @@ func main() {
 	fmt.Println("Parallel read from LICENSE with channels")
 
 	//EDIT: As of Go 1.8 (Released February 2017) the recommended way of doing PWD is with os.Executable
-	//ex, err := os.Executable()
+	//pwd, err := os.Executable()
 	_, pwd, _, ok := runtime.Caller(0)
 	if !ok {
-        panic("No caller information")
-    }
+		panic("No caller information")
+	}
 	pwd = strings.Trim(pwd, "main.go")
 	file := "LICENSE"
 	pth := pwd + file
@@ -77,4 +87,17 @@ func main() {
 		n := useful.TxtFile(string(f))
 		fmt.Println(n)
 	}
+
+	// Using json parsing from http page
+	fmt.Println()
+	fmt.Println("Get json content from http GET")
+
+	iss := Iss{}
+	iss_alt := Iss{}
+	path := "/iss/engines/stock/markets/bonds/securities.json"
+	URL := HOST + path + http_json
+	useful.GetJson(URL, &iss)
+	fmt.Println("Run GetJson", iss)
+	useful.GetJsonAlt(URL, &iss_alt)
+	fmt.Println("Run GetJsonAlt", iss_alt)
 }
