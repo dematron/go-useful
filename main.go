@@ -8,6 +8,8 @@ import (
 	"io/ioutil"
 	"os"
 	"reflect"
+	"runtime"
+	"strings"
 )
 
 // Results
@@ -56,13 +58,20 @@ func main() {
 	// parallel text read with channels
 	fmt.Println()
 	fmt.Println("Parallel read from LICENSE with channels")
-	pwd, err := os.Getwd()
-	common.CheckError(err)
-	file := "LICENSE"
-	path := pwd + "/" + file
-	if _, err := os.Stat(path); !os.IsNotExist(err) {
 
-		f, err := ioutil.ReadFile(path)
+	//EDIT: As of Go 1.8 (Released February 2017) the recommended way of doing PWD is with os.Executable
+	//ex, err := os.Executable()
+	_, pwd, _, ok := runtime.Caller(0)
+	if !ok {
+        panic("No caller information")
+    }
+	pwd = strings.Trim(pwd, "main.go")
+	file := "LICENSE"
+	pth := pwd + file
+	fmt.Println(pth)
+	if _, err := os.Stat(pth); !os.IsNotExist(err) {
+
+		f, err := ioutil.ReadFile(pth)
 		common.CheckError(err)
 
 		n := useful.TxtFile(string(f))
