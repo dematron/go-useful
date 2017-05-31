@@ -10,16 +10,6 @@ import (
 	"reflect"
 )
 
-type Iss struct {
-	Securities struct {
-		Columns []string        `json:"columns"`
-		Data    [][]interface{} `json:"data"`
-	} `json:"securities"`
-}
-
-const HOST = "https://moex.com"
-const http_json = "?iss.json=compact&iss.meta=off"
-
 // Results
 func main() {
 	fmt.Println(useful.ReadEntireFile("/etc/hosts"))
@@ -84,16 +74,18 @@ func main() {
 		fmt.Println(n)
 	}
 
+	// Url read
+	fmt.Println()
+	fmt.Println("Simple URL content read example")
+	fmt.Println(string(useful.ReadUrl()))
+
 	// Using json parsing from http page
 	fmt.Println()
 	fmt.Println("Get json content from http GET")
+	useful.JsonParsing()
 
-	iss := Iss{}
-	iss_alt := Iss{}
-	path := "/iss/engines/stock/markets/bonds/securities.json"
-	URL := HOST + path + http_json
-	useful.GetJson(URL, &iss)
-	fmt.Println("Run GetJson", iss)
-	useful.GetJsonAlt(URL, &iss_alt)
-	fmt.Println("Run GetJsonAlt", iss_alt)
+	// Json parsing without struct
+	fmt.Println()
+	fmt.Println("Read JSON without struct")
+	useful.JsonWithoutStruct()
 }
