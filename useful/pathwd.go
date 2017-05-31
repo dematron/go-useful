@@ -19,6 +19,11 @@ func GetPwd1() string {
 }
 
 // GetPwd2 always return folder path from where you run it
+// For example if you run
+// cd /folder
+// then run in this path (we suppose that this file is exist)
+// go run golang/src/project/main.go
+// command return - /folder
 func GetPwd2() string {
 	pwd, err := os.Getwd()
 	if err != nil {
