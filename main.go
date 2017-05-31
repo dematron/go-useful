@@ -8,8 +8,6 @@ import (
 	"io/ioutil"
 	"os"
 	"reflect"
-	"runtime"
-	"strings"
 )
 
 type Iss struct {
@@ -65,20 +63,18 @@ func main() {
 	str1 := "Hello, world!"
 	fmt.Println("String 'Hello, world!' ToByteSlice", useful.StringToByteSlice(str1))
 
+	// Different 'pwd' variants
+	fmt.Println("Path of the the file where func GetPwd1() declared:", useful.GetPwd1())
+	fmt.Println("Running golang file folder path:", useful.GetPwd2())
+	fmt.Println("Running golang binary file path:", useful.GetPwd3())
+	pwd := useful.GetPwd2()
+	file := "LICENSE"
+	pth := pwd + "/" + file
+	fmt.Println("Path to needed file LICENSE:", pth)
+
 	// parallel text read with channels
 	fmt.Println()
 	fmt.Println("Parallel read from LICENSE with channels")
-
-	//EDIT: As of Go 1.8 (Released February 2017) the recommended way of doing PWD is with os.Executable
-	//pwd, err := os.Executable()
-	_, pwd, _, ok := runtime.Caller(0)
-	if !ok {
-		panic("No caller information")
-	}
-	pwd = strings.Trim(pwd, "main.go")
-	file := "LICENSE"
-	pth := pwd + file
-	fmt.Println(pth)
 	if _, err := os.Stat(pth); !os.IsNotExist(err) {
 
 		f, err := ioutil.ReadFile(pth)
