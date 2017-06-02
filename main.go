@@ -12,9 +12,22 @@ import (
 
 // Results
 func main() {
-	fmt.Println(useful.ReadEntireFile("/etc/hosts"))
-	useful.ReadFileByLines("/etc/hosts")
+	// Different 'pwd' variants
+	fmt.Println("Path of the the file where func GetPwd1() declared:", useful.GetPwd1())
+	fmt.Println("Running golang file folder path:", useful.GetPwd2())
+	fmt.Println("Running golang binary file path:", useful.GetPwd3())
+	pwd := useful.GetPwd2()
+	file := "LICENSE"
+	pth := pwd + "/" + file
+	fmt.Println("Path to needed file LICENSE:", pth)
+
+	fmt.Println()
+	fmt.Println(useful.ReadEntireFile(pth))
+	fmt.Println()
+	useful.ReadFileByLines(pth)
+
 	// Return variable type
+	fmt.Println()
 	variable := float64(155.28)
 	GetVarType := func() {
 		fmt.Println("The type of the variable is:", reflect.TypeOf(variable))
@@ -53,15 +66,6 @@ func main() {
 	str1 := "Hello, world!"
 	fmt.Println("String 'Hello, world!' ToByteSlice", useful.StringToByteSlice(str1))
 
-	// Different 'pwd' variants
-	fmt.Println("Path of the the file where func GetPwd1() declared:", useful.GetPwd1())
-	fmt.Println("Running golang file folder path:", useful.GetPwd2())
-	fmt.Println("Running golang binary file path:", useful.GetPwd3())
-	pwd := useful.GetPwd2()
-	file := "LICENSE"
-	pth := pwd + "/" + file
-	fmt.Println("Path to needed file LICENSE:", pth)
-
 	// parallel text read with channels
 	fmt.Println()
 	fmt.Println("Parallel read from LICENSE with channels")
@@ -88,4 +92,8 @@ func main() {
 	fmt.Println()
 	fmt.Println("Read JSON without struct")
 	useful.JsonWithoutStruct()
+
+	// Goroutine and Channels examples
+	fmt.Println()
+	useful.GoroutineAndChannelsExamples()
 }
