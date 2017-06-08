@@ -66,6 +66,10 @@ func main() {
 	str1 := "Hello, world!"
 	fmt.Println("String 'Hello, world!' ToByteSlice", useful.StringToByteSlice(str1))
 
+	// Slices
+	fmt.Println()
+	useful.SliceExamples()
+
 	// parallel text read with channels
 	fmt.Println()
 	fmt.Println("Parallel read from LICENSE with channels")
