@@ -13,13 +13,15 @@ import (
 // Results
 func main() {
 	// Different 'pwd' variants
-	fmt.Println("Path of the the file where func GetPwd1() declared:", useful.GetPwd1())
-	fmt.Println("Running golang file folder path:", useful.GetPwd2())
-	fmt.Println("Running golang binary file path:", useful.GetPwd3())
+	fmt.Printf("Path of the the file where func GetPwd1() declared: %q.\n", useful.GetPwd1())
+	fmt.Printf("Running golang file folder path (main.go in our case): %q.\n", useful.GetPwd2())
+	fmt.Printf("Running golang binary file path: %q.\n", useful.GetPwd3())
 	pwd := useful.GetPwd2()
 	file := "LICENSE"
 	pth := pwd + "/" + file
 	fmt.Println("Path to needed file LICENSE:", pth)
+	// Other pwd
+	useful.GetPwdOther()
 
 	fmt.Println()
 	fmt.Println(useful.ReadEntireFile(pth))

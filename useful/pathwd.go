@@ -1,13 +1,15 @@
 package useful
 
 import (
+	"go-useful/common"
+
 	"fmt"
 	"os"
+	"path/filepath"
 	"runtime"
 )
 
 // GetPwd1 return .go file path, where func really is
-//
 // Useful only with .go file
 // With binary file always return path of source .go file
 func GetPwd1() string {
@@ -26,9 +28,7 @@ func GetPwd1() string {
 // command return - /folder
 func GetPwd2() string {
 	pwd, err := os.Getwd()
-	if err != nil {
-		fmt.Println(err)
-	}
+	common.CheckError(err)
 	return pwd
 }
 
@@ -39,8 +39,13 @@ func GetPwd2() string {
 // /var/folders/n3/r0chsz09339gm2gbxdhjctgr0000gn/T/go-build824104956/command-line-arguments/_obj/exe/test
 func GetPwd3() string {
 	pwd, err := os.Executable()
-	if err != nil {
-		fmt.Println(err)
-	}
+	common.CheckError(err)
 	return pwd
+}
+
+// GetPwdOther print 3 more variants of getting different paths
+func GetPwdOther() {
+	fmt.Printf("Binary file name with filepath.Base(os.Args[0]): %q.\n", filepath.Base(os.Args[0]))
+	fmt.Printf("Full path to binary file including its name with filepath.Clean(os.Args[0]): %q.\n", filepath.Clean(os.Args[0]))
+	fmt.Printf("Full path to binary file excluding its name with filepath.Dir(os.Args[0]): %q.\n", filepath.Dir(os.Args[0]))
 }
