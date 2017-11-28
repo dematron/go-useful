@@ -3,7 +3,10 @@ package useful
 import (
 	"go-useful/common"
 
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"os"
 	"strconv"
 )
 
@@ -34,3 +37,27 @@ func UsingStruct() (result *TestStruct) {
 // and return - var with type *MyStruct or []*MyStruct
 // example in cron.go
 //
+
+// TODO: https://play.golang.org/p/Pw9f20zwja
+
+// Configuration
+type Configuration struct {
+
+}
+
+func getConfig(path string, c interface{}) {
+	file, err := ioutil.ReadFile(path)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Error", err)
+	}
+	err = json.Unmarshal(file, &c)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Error", err)
+	}
+}
+
+func GetMainConfig(path string) Configuration {
+	c := Configuration{}
+	getConfig(path, &c)
+	return c
+}

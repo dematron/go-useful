@@ -9,6 +9,13 @@ import (
 	"github.com/tidwall/gjson"
 )
 
+//var prettyJSON bytes.Buffer
+//err = json.Indent(&prettyJSON, []byte(data), "", "    ")
+//if err != nil {
+//	fmt.Println(err)
+//}
+//
+
 type Iss struct {
 	Securities struct {
 		Columns []string        `json:"columns"`
